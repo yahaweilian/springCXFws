@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?><!--Converted at: Thu Jun 22 20:42:21 
+	CST 2017 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ynding.dao.JyskbDao">
+	<!--  <sql id="sql_select">
+		select
+		NSR_ID as nsrId,SFZ_URL as sfzUrl,FCXX_ID as fcxxId,NSRLX as nsrlx,NSRXM as
+		nsrxm,
+		NSRZJLX_DM as nsrzjlxDm,NSRZJHM as nsrzjhm,DZ as dz,DH as dh,CZRY_DM as
+		czryDm,LRSJ as lrsj,
+		ZGSWJG_DM as zgswjgDm,DJZCLX_DM as djzclxDm,HY_DM as hyDm,MMFBJ as mmfbj,SHBJ
+		as shbj,
+		ZSBJ as zsbj,SCBJ as scbj,GJ_DM as gjDm,DJXH as djxh,GYRBJ as gyrbj,CFJG
+		as cfjg,SZFE as szfe
+	</sql>
+
+	<sql id="sql_where">
+		from FC_JY_NSR
+		<where>
+			<if test="nsrId !=null and nsrId !=''">
+				and NSR_ID=#{nsrId}
+			</if>
+			<if test="sfzUrl !=null and sfzUrl !=''">
+				and SFZ_URL=#{sfzUrl}
+			</if>
+			<if test="fcxxId !=null and fcxxId !=''">
+				and FCXX_ID=#{fcxxId}
+			</if>
+			<if test="nsrlx !=null and nsrlx !=''">
+				and NSRLX=#{nsrlx}
+			</if>
+			<if test="nsrxm !=null and nsrxm !=''">
+				and NSRXM=#{nsrxm}
+			</if>
+			<if test="nsrzjlxDm !=null and nsrzjlxDm !=''">
+				and NSRZJLX_DM=#{nsrzjlxDm}
+			</if>
+			<if test="nsrzjhm !=null and nsrzjhm !=''">
+				and NSRZJHM=#{nsrzjhm}
+			</if>
+			<if test="dz !=null and dz !=''">
+				and DZ=#{dz}
+			</if>
+			<if test="dh !=null and dh !=''">
+				and DH=#{dh}
+			</if>
+			<if test="czryDm !=null and czryDm !=''">
+				and CZRY_DM=#{czryDm}
+			</if>
+			<if test="lrsj !=null and lrsj !=''">
+				and LRSJ=#{lrsj}
+			</if>
+			<if test="zgswjgDm !=null and zgswjgDm !=''">
+				and ZGSWJG_DM=#{zgswjgDm}
+			</if>
+			<if test="djzclxDm !=null and djzclxDm !=''">
+				and DJZCLX_DM=#{djzclxDm}
+			</if>
+			<if test="hyDm !=null and hyDm !=''">
+				and HY_DM=#{hyDm}
+			</if>
+			<if test="mmfbj !=null and mmfbj !=''">
+				and MMFBJ=#{mmfbj}
+			</if>
+			<if test="shbj !=null and shbj !=''">
+				and SHBJ=#{shbj}
+			</if>
+			<if test="zsbj !=null and zsbj !=''">
+				and ZSBJ=#{zsbj}
+			</if>
+			<if test="scbj !=null and scbj !=''">
+				and SCBJ=#{scbj}
+			</if>
+			<if test="gjDm !=null and gjDm !=''">
+				and GJ_DM=#{gjDm}
+			</if>
+			<if test="djxh !=null and djxh !=''">
+				and DJXH=#{djxh}
+			</if>
+			<if test="gyrbj !=null and gyrbj !=''">
+				and GYRBJ=#{gyrbj}
+			</if>
+			<if test="cfjg !=null and cfjg !=''">
+				and CFJG=#{cfjg}
+			</if>
+			<if test="szfe !=null and szfe !=''">
+				and SZFE=#{szfe}
+			</if>
+		</where>
+	</sql>
+	<insert id="batchAdd" parameterType="java.util.List">
+		insert into FC_JY_SKB
+       (SKBID,MMFBZ,JMXZDM,CLFZLFBZ,FCXX_ID,QYBZ)
+		<foreach collection="list" item="item" index="index"
+			separator="union all">
+			(select  #{item.skbid},#{item.mmfbz},#{item.jmxzdm},#{item.clfzlfbz},#{item.fcxxId},#{item.qybz} from dual)
+		</foreach>
+	</insert>
+	<select id="getList" parameterType="java.util.Map"
+		resultType="com.ingta.tax.house.entity.Nsr">
+		<include refid="sql_select" />
+		<include refid="sql_where" />
+	</select>-->
+<sql id="sql_select">
+		select
+		SKBID as skbid, MMFBZ as mmfbz, ZSXM_DM as zsxmDm,SYQK as syqk , SL as sl
+		,JMXZDM as jmxzdm, JMXZMC as jmxzmc,JMSXDMJMC as jmsxdmjmc,QYBZ as qybz
+		,CLFZLFBZ as clfzlfbz,ZXPM_DM as zxpmDm,ZSZM_DM as zszmDm,SFHTJEJZ as sfhtjejz
+		,JSJE as jsje,SE as se,NSR_ID as nsrid
+		,FCXX_ID as fcxxId,JYFE as jyfe,SZ_ZSXM_DM as szZsxmDm
+	</sql>
+
+	<sql id="sql_where">
+		from FC_JY_SKB
+		<where>
+			<if test="fcxxId !=null and fcxxId !=''">
+				and FCXX_ID=#{fcxxId}
+			</if>
+			<if test="jyfe !=null ">
+				and JYFE=#{jyfe}
+			</if>
+			<if test="szZsxmDm !=null and szZsxmDm !=''">
+				and SZ_ZSXM_DM=#{szZsxmDm}
+			</if>
+			<if test="clfzlfbz !=null and clfzlfbz !=''">
+				and CLFZLFBZ=#{clfzlfbz}
+			</if>
+			<if test="zxpmDm !=null and zxpmDm  !=''">
+				and ZXPM_DM=#{zxpmDm}
+			</if>
+			<if test="zszmDm !=null and zszmDm !=''">
+				and ZSZM_DM=#{zszmDm}
+			</if>
+			<if test="sfhtjejz !=null and sfhtjejz !=''">
+				and SFHTJEJZ=#{sfhtjejz}
+			</if>
+			<if test="jsje !=null">
+				and JSJE=#{jsje}
+			</if>
+			<if test="se !=null">
+				and SE=#{se}
+			</if>
+			<if test="skbid !=null and skbid !=''">
+				and SKBID=#{skbid}
+			</if>
+			<if test="mmfbz !=null and  mmfbz !=''">
+				and MMFBZ=#{mmfbz}
+			</if>
+			<if test=" zsxmDm!=null and zsxmDm !=''">
+				and ZSXM_DM=#{zsxmDm}
+			</if>
+			<if test=" syqk!=null and syqk !=''">
+				and SYQK=#{syqk}
+			</if>
+			<if test=" sl!=null">
+				and SL=#{sl}
+			</if>
+			<if test=" jmxzdm!=null and  jmxzdm!=''">
+				and JMXZDM=#{jmxzdm}
+			</if>
+			<if test="jmxzmc !=null and jmxzmc !=''">
+				and JMXZMC=#{jmxzmc}
+			</if>
+			<if test="jmsxdmjmc !=null and jmsxdmjmc  !=''">
+				and JMSXDMJMC=#{jmsxdmjmc}
+			</if>
+			<if test=" qybz!=null and qybz !=''">
+				and QYBZ=#{qybz}
+			</if>
+			<if test="nsrId !=null and nsrId !=''">
+				and NSR_ID=#{nsrId}
+			</if>
+		</where>
+	</sql>
+	<insert id="batchAdd" parameterType="java.util.List">
+		insert into FC_JY_SKB
+       (SKBID,MMFBZ,ZSXM_DM,SYQK,SL,JMXZDM,JMXZMC,JMSXDMJMC,QYBZ,CLFZLFBZ,ZXPM_DM
+       ,ZSZM_DM,SFHTJEJZ,JSJE,SE,NSR_ID,FCXX_ID,JYFE,SZ_ZSXM_DM)
+		<foreach collection="list" item="item" index="index"
+			separator="union all">
+			(select  #{item.skbid},#{item.mmfbz},#{item.zsxmDm},#{item.syqk},#{item.sl},#{item.jmxzdm}
+			,#{item.jmxzmc},#{item.jmsxdmjmc},#{item.qybz},#{item.clfzlfbz},#{item.zxpmDm},#{item.zszmDm}
+			,#{item.sfhtjejz},#{item.jsje},#{item.se},#{item.nsrid} ,#{item.fcxxId},#{item.jyfe},#{item.szZsxmDm} 
+			from dual)
+		</foreach>
+	</insert>
+	<!-- 查询数据 -->
+	<select id="getList" parameterType="java.util.Map" resultType="jyskb">
+		<include refid="sql_select" />
+		<include refid="sql_where" />
+	</select>
+		<!-- 查询数据 -->
+	<select id="getJyskbLists" parameterType="java.util.Map" resultType="jyskb">
+		select distinct fcxx_id as fcxxId,mmfbz,dm_gy_zsxm.zsxm_dm as zsxmDm ,sl,jsje,se,zsxmmc from fc_jy_skb,dm_gy_zsxm where fc_jy_skb.zsxm_dm = dm_gy_zsxm.zsxm_dm and FCXX_ID=#{fcxxId}
+	</select>
+			<!-- 查询增值税列表-->
+	<select id="getZzsList" parameterType="java.util.Map" resultType="jyskb">
+		select fcxx_id as fcxxId,sl,se from fc_jy_skb  where FCXX_ID=#{fcxxId} and zsxm_dm = #{zsxmdm}
+	</select>
+	
+</mapper>

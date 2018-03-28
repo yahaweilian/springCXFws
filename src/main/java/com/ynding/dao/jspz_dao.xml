@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><!--Converted at: Thu Jun 22 20:42:21 CST 2017-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ynding.dao.JspzDao">
+
+    <sql id="sql_count">
+        select count(*)
+    </sql>
+    <sql id="sql_where">
+     from FC_XT_JSPZ
+     <where>
+       <if test="zsxmDm != null and zsxmDm != ''">
+           and ZSXM_DM=#{zsxmDm}
+        </if>
+        <if test="zxpmDm != null and zxpmDm != ''">
+           and ZXPM_DM=#{zxpmDm}
+        </if>
+        <if test="sycs != null and sycs != ''">
+           and SYCS=#{sycs}
+        </if>
+        <if test="sfsz != null and sfsz != ''">
+           and SFSZ=#{sfsz}
+        </if>
+        <if test="sfszzsz != null and sfszzsz != ''">
+           and SFSZZSZ=#{sfszzsz}
+        </if>   
+        <if test="szZsxmDm != null and szZsxmDm != ''">
+           and SZ_ZSXM_DM=#{szZsxmDm}
+        </if>
+        <if test="szZspmDm != null and szZspmDm != ''">
+           and SZ_ZSPM_DM=#{szZspmDm}
+        </if>
+        <if test="mmfbz != null and mmfbz != ''">
+           and MMFBZ=#{mmfbz}
+        </if>
+        <if test="sfqy != null and sfqy != ''">
+           and SFQY=#{sfqy}
+        </if>
+        <if test="plsx != null and plsx != ''">
+           and PLSX=#{plsx}
+        </if>
+        <if test="sl != null and sl != ''">
+           and SL=#{sl}
+        </if>   
+        <if test="zszmDm != null and zszmDm != ''">
+           and ZSZM_DM=#{zszmDm}
+        </if>
+        <if test="sfzrr != null and sfzrr != ''">
+           and SFZRR=#{sfzrr}
+        </if>
+        <if test="sfzz != null and sfzz != ''">
+           and SFZZ=#{sfzz}
+        </if>
+        <if test="fwmj != null and fwmj != ''">
+           and FWMJ=#{fwmj}
+        </if>
+        <if test="jynx != null and jynx != ''">
+           and JYNX=#{jynx}
+        </if>
+        <if test="jtzfts != null and jtzfts != ''">
+           and JTZFTS=#{jtzfts}
+        </if>
+        <if test="sfhtjejz != null and sfhtjejz != ''">
+           and SFHTJEJZ=#{sfhtjejz}
+        </if>
+        <if test="sxxzbj != null and sxxzbj != ''">
+           and SXXZBJ=#{sxxzbj}
+        </if>
+        <if test="jmxzDm != null and jmxzDm != ''">
+           and JMXZ_DM=#{jmxzDm}
+        </if>
+        <if test="clfzlfbz != null and clfzlfbz != ''">
+           and CLFZLFBZ=#{clfzlfbz}
+        </if>
+     </where>
+    </sql> 
+    <sql id="sql_select">
+        select UUID as uuid,ZSXM_DM as zsxmDm,ZsPM_DM as zspmDm,SYCS as sycs,
+        SFSZ as sfsz,SFSZZSZ as sfszzsz,SZ_ZSXM_DM as szZsxmDm,SZ_ZSPM_DM as szZspmDm,
+        MMFBZ as mmfbz,SFQY as sfqy,PLSX as plsx,SL as sl,ZSZM_DM as zszmDm,SFZRR as sfzrr,
+        SFZZ as sfzz,FWMJ as fwmj,JYNX as jynx,JTZFTS as jtzfts,SFHTJEJZ as sfhtjejz,SXXZBJ as sxxzbj,
+        JMXZ_DM as jmxzDm, CLFZLFBZ as clfzlfbz,SYFW as syfw
+    </sql>
+    <!-- 统计数量 --> 
+    <select id="getCount" parameterType="java.util.Map" resultType="java.lang.Long">
+        <include refid="sql_count"/>
+        <include refid="sql_where"/>
+    </select>
+    <!-- 获取数据 -->    
+     <select id="getList" parameterType="java.util.Map" resultType="jspz">
+        <include refid="sql_select"/>
+        <include refid="sql_where"/>
+    </select>
+    
+       <!-- 根据优惠代码获取数据 -->    
+    <select id="getByJmxzdm" parameterType="java.lang.String" resultType="jspz">
+        <include refid="sql_select"/>
+        from FC_XT_JSPZ where SFQY='Y' and UUID=#{value}
+    </select>
+</mapper>

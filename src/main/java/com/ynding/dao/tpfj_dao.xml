@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><!--Converted at: Thu Jun 22 20:42:21 
+	CST 2017 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ynding.dao.TpfjDao">
+	<sql id="sql_select">
+		select
+		UUID as uuid,FCXX_ID as fcxxId,FCTPLX as fctplx,PLSX as plsx,URL as
+		url,SFQY as sfqy,
+		FCTP_ID as fctpId,NSR_ID as nsrId,FCTP_ZT as fctpZt,SWRY_DM as swryDm,CZSH as
+		czsh,
+		FCTP_MC as fctpMc,FCTP_WJM as fctpWjm
+	</sql>
+
+	<sql id="sql_where">
+		from FC_JY_FCTPFJ
+		<where>
+			<if test="uuid !=null and uuid !=''">
+				and UUID=#{uuid}
+			</if>
+			<if test="fcxxId !=null and fcxxId !=''">
+				and FCXX_ID=#{fcxxId}
+			</if>
+			<if test="fctplx !=null and fctplx !=''">
+				and FCTPLX=#{fctplx}
+			</if>
+			<if test="plsx !=null and plsx !=''">
+				and PLSX=#{plsx}
+			</if>
+			<if test="url !=null and url !=''">
+				and URL=#{url}
+			</if>
+			<if test="sfqy !=null and sfqy !=''">
+				and SFQY=#{sfqy}
+			</if>
+			<if test="fctpId !=null and fctpId !=''">
+				and FCTP_ID=#{fctpId}
+			</if>
+			<if test="nsrId !=null and nsrId !=''">
+				and NSR_ID=#{nsrId}
+			</if>
+			<if test="fctpZt !=null and fctpZt !=''">
+				and FCTP_ZT=#{fctpZt}
+			</if>
+			<if test="swryDm !=null and swryDm !=''">
+				and SWRY_DM=#{swryDm}
+			</if>
+			<if test="czsh !=null and czsh !=''">
+				and CZSH=#{czsh}
+			</if>
+			<if test="fctpMc !=null and fctpMc !=''">
+				and FCTP_MC=#{fctpMc}
+			</if>
+			<if test="fctpWjm !=null and fctpWjm !=''">
+				and FCTP_WJM=#{fctpWjm}
+			</if>
+		</where>
+	</sql>
+	<insert id="batchAdd"  parameterType="java.util.List">
+		insert into FC_JY_FCTPFJ
+		(UUID,FCXX_ID,FCTPLX,PLSX,URL,FCTP_ID)
+		<foreach collection="list" item="item" index="index"
+			separator="union all">
+	 (select#{item.uuid},#{item.fcxxId},#{item.fctplx},#{item.plsx},#{item.url},#{item.fctpId} from dual)
+    	 <!-- ( select #{item.uuid,jdbcType=VARCHAR},#{item.fcxxId,jdbcType=VARCHAR},#{item.fctplx,jdbcType=VARCHAR},#{item.plsx,jdbcType=VARCHAR},#{item.url,jdbcType=VARCHAR},#{item.fctpId,jdbcType=VARCHAR} from dual) -->		
+		</foreach>
+	</insert>
+	<!-- 查询数据 -->
+	<select id="getList" parameterType="java.util.Map"
+		resultType="tpfj">
+		<include refid="sql_select" />
+		<include refid="sql_where" />
+	</select>
+	
+	<select id="getCountByFctpid" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(1)
+		from FC_JY_FCTPFJ where  FCTP_ID in 
+				<foreach collection="fctpfjList" item="item" open="(" close=")" separator=",">
+					#{item.fctpid}
+				</foreach>
+	</select>
+    <update id="updateFctpfj" parameterType="java.util.List" >
+          <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
+                update FC_JY_FCTPFJ t 
+                 set 
+                   t.FCXX_ID=#{item.fcxxid,jdbcType=VARCHAR}
+                   where t.FCTP_ID= #{item.fctpid,jdbcType=VARCHAR}
+          </foreach>
+      </update>
+</mapper>

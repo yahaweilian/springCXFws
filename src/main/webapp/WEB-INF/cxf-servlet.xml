@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  
+       http://www.springframework.org/schema/context 
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://cxf.apache.org/jaxws
+       http://cxf.apache.org/schemas/jaxws.xsd">
+
+    <import resource="classpath:META-INF/cxf/cxf.xml"/>  
+    <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>  
+    <!-- <import resource="classpath:META-INF/cxf/cxf-extension-soap.xml"/> -->
+    
+	<context:annotation-config />
+	<context:component-scan base-package="com" />
+	
+	
+    <jaxws:endpoint id="LthAipWebService"  implementor="#lthAipWebServiceImpl" 
+        address="/LthAipWebService" >
+    </jaxws:endpoint>
+    
+    <jaxws:endpoint id="HelloCXFService"  implementor="#helloCXFServiceImpl" 
+        address="/HelloCXFService" >
+    </jaxws:endpoint>
+    
+    <bean id="inInter" class="org.apache.cxf.interceptor.LoggingInInterceptor" />
+    <bean id="outInter" class="org.apache.cxf.interceptor.LoggingOutInterceptor"/>
+    
+ <!--    <jaxws:server id="lthAipWebService" serviceClass="com.ynding.ws.service.LthAipWebService" 
+         address="/LthAipWebService">
+         <jaxws:serviceBean>
+            <ref bean="lthAipWebServiceImpl" />
+         </jaxws:serviceBean>
+         <jaxws:inInterceptors>
+            <ref bean="inInter"/>
+            <ref bean="outInter"/>
+         </jaxws:inInterceptors>
+    </jaxws:server> -->
+    
+</beans>  

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><!--Converted at: Thu Jun 22 20:42:21 
+	CST 2017 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ynding.dao.TaxHouseDao">
+	<sql id="sql_select1">
+		select th.HOUSE_ID as houseId,th.BIANMA as bianma,th.HTBH
+		as htbh,th.BARQ as barq,th.XQMC as xqmc,th.DIZHI as
+		dizhi,th.QUANZHENG_TIME as quanzhengTime,th.LOUCENG_ZONG as
+		loucengZong,th.LOUCENG as louceng,th.MIANJI as mianji,th.JIEGOU as
+		jiegou,th.CAOXIANG as caoxiang,th.NIANDAI
+		as niandai,th.YONGTU as
+		yongtu,th.SHENBAO as shenbao,th.QIANCI as qianci,th.QIANCI_TIME as
+		qianciTime,th.QUANSHU as quanshu,th.FWDH as fwdh,th.DY as
+		danyuan,th.FANGHAO as fanghao,th.QCJYLX as qianciWay,th.FSJE as
+		fsje,th.DJ as dj,th.ZHUANGXIU as zhuangxiu,td.DICT_NAME as qcjylxmc
+	</sql>
+
+	<sql id="sql_where1">
+		from TAX_HOUSE th LEFT JOIN TAX_DICT td ON th.QIANCIWAY = td.DICT_ID
+		<where>
+			<if test="houseId !=null and houseId !=''">
+				and th.HOUSE_ID=#{houseId}
+			</if>
+			<if test="htbh !=null and htbh !=''">
+				and th.HTBH=#{htbh}
+			</if>
+
+		</where>
+	</sql>
+
+
+	<insert id="addObject" parameterType="TaxHouse">
+		insert into TAX_HOUSE
+		(HOUSE_ID,BIANMA,XINFANG,HTBH,BARQ,FENQU,QUHUA,CHENGSHI,DIZHI,QUANZHENG_TIME,LOUCENG_ZONG,LOUCENG,
+		LEIXING_FEN,LEIXING_ZONG,MIANJI,JIEGOU,NIANDAI,SHENBAO,DJ,QIANCI,QIANCI_TIME,QCJYLX,QUANSHU,
+		FWDH,DY,FANGHAO,FSJE,ZHUGUAN,ZHUANGXIU,CAOXIANG,YONGTU,FANGFA,LINJIE,CAOZUO,LURU_TIME,CHURANG,
+		SHOURANG,JIEDAO,JIAOYI_TIME)values
+		(#{houseId},#{bianma},#{xinfang},#{htbh},#{barq},#{fenqu},#{quhua},#{chengshi},#{dizhi},#{quanzhengTime},
+		#{loucengZong},#{louceng},#{leixingFen},#{leixingZong},#{mianji},#{jiegou},#{niandai},#{shenbao},
+		#{dj},#{qianci},#{qianciTime},#{qianciWay},#{quanshu},#{fwdh},#{danyuan},#{fanghao},#{fsje},#{zhuguan},
+		#{zhuangxiu},#{caoxiang},#{yongtu},#{fangfa},#{linjie},#{caozuo},#{luruTime},#{churang},#{shourang},
+		#{jiedao}, sysdate) 
+	</insert>
+
+
+	<sql id="sql_select">
+		select
+		HOUSE_ID as houseId,BIANMA as bianma,HTBH as
+		htbh,ZHUGUAN as zhuguan,BARQ as
+		barq,FENQU as fenqu,
+		DIZHI as
+		dizhi,louceng_zong as loucengZong,louceng as louceng,mianji as
+		mianji,Dj as dj,JIEGOU as jiegou,
+		NIANDAI as niandai,QUANSHU as
+		quanshu,FWDH as fwdh,DY as danyuan,FANGHAO as
+		fanghao
+
+	</sql>
+	<sql id="sql_where">
+		from tax_house
+		<where>
+			<if test="houseId !=null and houseId !=''">
+				and HOUSE_ID=#{houseId}
+			</if>
+			<if test="htbh !=null and htbh != ''">
+				and htbh=#{htbh}
+			</if>
+		</where>
+	</sql>
+	<select id="getByHtbh" parameterType="java.util.Map"
+		resultType="taxHouse">
+		<include refid="sql_select" />
+		<include refid="sql_where" />
+	</select>
+	<!-- 查询数据 -->
+	<select id="getObject" parameterType="java.util.Map"
+		resultType="taxHouse">
+		<include refid="sql_select1" />
+		<include refid="sql_where1" />
+	</select>
+	<insert id="add" parameterType="TaxHouse">
+		insert into
+		TAX_HOUSE(HOUSE_ID,BIANMA,DIZHI,XINFANG,ZHUGUAN,CAOZUO,CHURANG,SHOURANG,CHENGSHI,LEIXING_ZONG,LEIXING_FEN,SHENBAO,FANGFA,JIEGOU,QUANZHENG_TIME,HTBH,LURU_TIME,FENQU,QUHUA,
+		BARQ, XQMC, MIANJI,LOUCENG,
+		LOUCENG_ZONG,NIANDAI,FWDH,DY,FANGHAO,YONGTU,JIAOYI_TIME,JIEDAO)
+		values
+		(#{houseId},#{bianma},#{dizhi},#{xinfang},#{zhuguan},#{caozuo},#{churang},#{shourang},
+		#{chengshi},#{leixingZong},#{leixingFen},#{shenbao},#{fangfa},#{jiegou},#{quanzhengTime},#{htbh},#{luruTime},
+		#{fenqu},#{quhua},#{barq},#{xqmc},#{mianji},#{louceng},#{loucengZong},
+		#{niandai},#{fwdh},#{danyuan},#{fanghao},#{yongtu}, sysdate,#{jiedao})
+
+	</insert>
+
+	<!-- 查询数量 -->
+	<select id="getCountByHtbh" parameterType="java.util.Map"
+		resultType="java.lang.Integer">
+	   select count(1) from TAX_HOUSE,FC_JY_ZTB where  TAX_HOUSE.HOUSE_ID = FC_JY_ZTB.FCXX_ID  and  (HTBH=#{htbh} or BIANMA = #{htbh}) and  FC_JY_ZTB.JYZT not IN('000','901')    
+	</select>
+</mapper>

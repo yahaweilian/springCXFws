@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!--Converted at: Thu Jun 22 20:42:21 CST 2017-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ynding.dao.NsrDao">
+
+  <sql id="sql_select">
+		select
+		NSR_ID as nsrId,FCXX_ID as fcxxId,HTBH as htbh,NSRLX as jyrlx,NSRXM as nsrxm,NSRZJLX_DM as nsrzjlxDm,NSRZJHM as nsrzjhm,DZ as dz,DH as dh,GJ_DM as gjDm,GYRBJ as gyrbj,JYFE as jyfe,SZFE
+        as szfe,DJXH as djxh,MMFBJ as mmfbj,LRSJ as lrsj
+</sql>
+<sql id="sql_where">
+		from FC_JY_NSR
+		<where>
+			<if test="fcxxId !=null and fcxxId !=''">
+				and FCXX_ID=#{fcxxId}
+			</if>
+		</where>
+</sql>
+
+  <insert id="batchAdd"  parameterType="java.util.List">
+   insert into FC_JY_NSR
+		(NSR_ID,FCXX_ID,NSRLX,NSRXM,NSRZJLX_DM,NSRZJHM,DZ,DH,GYRBJ,JYFE,SZFE,LRSJ, CLR, MMFBJ)
+<foreach collection="list" item="item" index="index" separator="union all" >
+    ( select
+    #{item.nsrId},#{item.fcxxId},#{item.nsrlx},#{item.nsrxm},#{item.nsrzjlxDm},#{item.nsrzjhm},#{item.dz},
+    #{item.dh},#{item.gyrbj},#{item.jyfe},#{item.szfe},#{item.lrsj},#{item.clr},#{item.mmfbj} from dual)
+</foreach>
+</insert>   
+<select id="getList" parameterType="java.util.Map" 	resultType="nsr">
+		 select NSRXM as nsrxm,NSRZJLX_DM as nsrzjlxDm,NSRZJHM as nsrzjhm,DH as dh,DZ as dz,SZFE as szfe,GYRBJ as gyrbj from fc_jy_nsr 
+		 <where>
+			<if test="fcxx_id !=null and fcxx_id != ''" >
+				 fcxx_id=#{fcxx_id}
+			</if>
+		 </where>
+		<!-- 	<if test="htbh !=null and htbh != ''" >
+				and htbh=#{htbh}
+			</if> -->
+	</select>
+	
+
+<!-- 查询数据 -->
+	<select id="getNseLists" parameterType="java.util.Map"
+		resultType="nsr">
+		<include refid="sql_select" />
+		<include refid="sql_where" />	
+	</select>
+
+<!-- 查询nsr处理人-->
+	<select id="getNsrClr" parameterType="java.util.Map" resultType="nsr">
+	select  NSRXM as nsrxm,NSRZJHM as nsrzjhm,clr from fc_jy_nsr where NSRXM=#{nsrxm} and NSRZJHM=#{nsrzjhm}
+	</select>
+</mapper>

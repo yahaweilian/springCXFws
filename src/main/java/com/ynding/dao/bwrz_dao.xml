@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!--Converted at: Thu Jun 22 20:42:21 CST 2017-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ynding.dao.BwrzDao">
+    <sql id="sql_count">
+        select count(*)
+    </sql>
+    <sql id="sql_where">
+     from FC_JY_BWRZ
+     <where>
+       <if test="transeq != null and transeq != ''">
+           and TRAN_SEQ=#{transeq}
+        </if>
+         <if test="transid != null and transid != ''">
+           and TRAN_ID=#{transid}
+        </if>
+         <if test="channelid != null and channelid != ''">
+           and CHANNEL_ID=#{channelid}
+        </if>
+         <if test="trandate != null and trandate != ''">
+           and TRAN_DATE=#{trandate}
+        </if>
+          <if test="xml != null and xml != ''">
+           and XML=#{xml}
+        </if>
+     </where>
+    </sql> 
+    <sql id="sql_select">
+        select TRAN_SEQ as transeq,TRAN_ID as transid,CHANNEL_ID as channelid,TRAN_DATE as trandate,
+        XML as xml
+    </sql>
+    <!-- 统计数量 --> 
+    <select id="getCount" parameterType="java.util.Map" resultType="java.lang.Long">
+        <include refid="sql_count"/>
+        <include refid="sql_where"/>
+    </select>
+    <!-- 获取数据 -->    
+     <select id="getList" parameterType="java.util.Map" resultType="Bwrz">
+        <include refid="sql_select"/>
+        <include refid="sql_where"/>
+    </select>
+    <insert id="add"  parameterType="Bwrz">
+    insert into FC_JY_BWRZ(TRAN_SEQ,TRAN_ID,CHANNEL_ID,TRAN_DATE,XML)values(#{transeq},#{transid},#{channelid},#{trandate},#{xml})
+    </insert>
+</mapper>
